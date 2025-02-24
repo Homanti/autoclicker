@@ -134,7 +134,7 @@ class MainWindow(QMainWindow):
         def on_click(x, y, button, pressed):
             if pressed and button == mouse.Button.left:
                 self.new_point_signal.emit((x, y))
-                return False  # прекращаем прослушивание после первого клика
+                return False
 
         listener = mouse.Listener(on_click=on_click)
         listener.start()
