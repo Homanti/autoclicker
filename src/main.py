@@ -36,7 +36,6 @@ class AutoClicker:
             for (x, y) in self.points:
                 if not self.running:
                     break
-                # Добавляем рандомное смещение по X и Y (от -3 до 3 пикселей)
                 offset_x = random.randint(-3, 3)
                 offset_y = random.randint(-3, 3)
                 pyautogui.moveTo(x + offset_x, y + offset_y)
@@ -50,6 +49,37 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Автокликер")
+
+        self.setStyleSheet("""
+            QWidget {
+                background: #212121;
+                color: white;
+            }
+            QPushButton {
+                background: #303030;
+                border: none;
+                border-radius: 5px;
+                padding: 5px;
+                margin: 2px;
+            }
+            QPushButton:hover {
+                background: #212121;
+            }
+            QPushButton:pressed {
+                background: #303030;
+            }
+            QLineEdit {
+                border: none;
+                background: #303030;
+                border-radius: 5px;
+                padding: 5px;
+                margin: 2px;
+            }
+            QListWidget {
+                border-radius: 5px;
+                border: 1px solid #303030;
+            }
+        """)
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -67,7 +97,6 @@ class MainWindow(QMainWindow):
         self.pointsList.setSelectionMode(QListWidget.SingleSelection)
         layout.addWidget(self.pointsList)
 
-        # Кнопка для удаления выбранной точки
         self.deletePointButton = QPushButton("Удалить выбранную точку")
         layout.addWidget(self.deletePointButton)
         self.deletePointButton.clicked.connect(self.delete_point)
@@ -94,7 +123,6 @@ class MainWindow(QMainWindow):
 
         self.new_point_signal.connect(self.handle_new_point)
 
-        # Настройка глобальных горячих клавиш
         hotkeys = {
             '<ctrl>+<shift>+s': self.start_clicking,
             '<ctrl>+<shift>+p': self.stop_clicking
